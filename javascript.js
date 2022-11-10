@@ -27,13 +27,20 @@ function oneRound(playerSelection, computerSelection) {
     return ("You Lose! Rock beats Scissors!") 
 }
 
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = (prompt("What hand?")).toLowerCase();
-    let computerSelection = getComputerChoice(sampleSpace);
-    oneRound(playerSelection, computerSelection)
-    console.log(oneRound(playerSelection, computerSelection))
-  }
-}
+// function game() {
+//   for (let i = 0; i < 5; i++) {
+//     let playerSelection = (prompt("What hand?")).toLowerCase();
+//     let computerSelection = getComputerChoice(sampleSpace);
+//     oneRound(playerSelection, computerSelection)
+//     console.log(oneRound(playerSelection, computerSelection))
+//   }
+// }
+// game()
 
-game()
+const rock = document.getElementById("rock")
+const paper = document.getElementById("paper")
+const scissors = document.getElementById("scissors")
+
+rock.addEventListener('click', () => { console.log(oneRound("rock", getComputerChoice(sampleSpace))) })
+paper.addEventListener('click', () => { console.log(oneRound("paper", getComputerChoice(sampleSpace))) })
+scissors.addEventListener('click', () => { console.log(oneRound("scissors", getComputerChoice(sampleSpace))) })
