@@ -1,88 +1,84 @@
-let sampleSpace = ["rock", "paper", "scissors"]
+let sampleSpace = ["Rock", "Paper", "Scissors"]
 
 function getComputerChoice(items) {
   return items[Math.floor(Math.random()*items.length)];
 }
 
-let computerScore = 0
-let playerScore = 0
-
-function oneRound(playerSelection, computerSelection) {
-  if (playerSelection === computerSelection)
-    return ("Tie!")
-
-  else if (playerSelection === "rock" && computerSelection === "paper") {
-    computerScore += 1
-    return ("You Lose! Paper beats Rock!")
+function roundWinner(playerSelection,computerSelection) {
+  if (playerSelection === computerSelection) {
+    return "Tie"
   }
-
-  else if (playerSelection === "rock" && computerSelection === "scissors") {
-    playerScore += 1
-    return ("You Win! Rock beats Scissors!")
+  else if(
+    (playerSelection === "Rock" && computerSelection === "Scissors") ||
+    (playerSelection === "Paper" && computerSelection === "Rock") ||
+    (playerSelection === "Scissors" && computerSelection === "Paper")
+  ) { 
+    return "Player"; 
   }
-
-  else if (playerSelection === "paper" && computerSelection === "rock") {
-    playerScore += 1
-    return ("You Win! Paper beats Rock!")
-  }
-
-  else if (playerSelection === "paper" && computerSelection === "scissors") {
-    computerScore += 1
-    return ("You Lose! Scissors beats Paper!")
-  }
-
-  else if (playerSelection === "scissors" && computerSelection === "paper") {
-    playerScore += 1
-    return ("You Win! Scissors beats Paper!")
-  }
-
-  else if (playerSelection === "scissors" && computerSelection === "rock") {
-    computerScore += 1
-    return ("You Lose! Rock beats Scissors!") 
+  else {
+    return "Computer";
   }
 }
 
-const rock = document.getElementById("rock")
-const paper = document.getElementById("paper")
-const scissors = document.getElementById("scissors")
+let computerScore = 0
+let playerScore = 0
 
 let results = document.querySelector(".results")
 let playerDisplayScore = document.querySelector(".player-score")
 let computerDisplayScore = document.querySelector(".computer-score")
 
-function updatePlayer() { playerDisplayScore.textContent = `Player Score: ${playerScore}` }
-function updateComputer() { computerDisplayScore.textContent = `Computer Score: ${computerScore}` }
-updatePlayer()
-updateComputer()
+function resetScore() {
+  computerScore = 0
+  playerScore = 0
+  updateScore()
+}
 
-function game() {
-  results.innerHTML = "Pick Rock, Paper or Scissors!"
-  rock.addEventListener('click', () => { 
-    let roundResult = oneRound("rock", getComputerChoice(sampleSpace))
-    results.innerHTML = (roundResult)
-    updatePlayer()
-    updateComputer()
-  })
-  
-  paper.addEventListener('click', () => { 
-    let roundResult = oneRound("paper", getComputerChoice(sampleSpace))
-    results.innerHTML = (roundResult)
-    updatePlayer()
-    updateComputer()
-  })
-  
-  scissors.addEventListener('click', () => { 
-    let roundResult = oneRound("scissors", getComputerChoice(sampleSpace))
-    results.innerHTML = (roundResult)
-    updatePlayer()
-    updateComputer()
-  })
-  if (computerScore === 5) {
-    results.innerHTML = "You lost this game. Better luck next time!"
+function resetMessage() {
+  results.innerHTML = "Start the game by choosing Rock, Paper or Scissors."
+}
+
+function updateScore() { 
+  playerDisplayScore.textContent = `Player Score: ${playerScore}`
+  computerDisplayScore.textContent = `Computer Score: ${computerScore}`
+}
+
+function oneRound(playerSelection, computerSelection) {
+  const result = roundWinner(playerSelection, computerSelection)
+  if(result == "Tie"){
+    return `It's a Tie! Both parties chose ${playerSelection}`
   }
-  if (playerScore === 5) {
-    results.innerHTML = "Well done! You won this game"
+  else if(result === "Player") {
+    playerScore += 1
+    return `You Win! ${playerSelection} beats ${computerSelection}`
+  }
+  else {
+    computerScore += 1
+    return `You Lose! ${computerSelection} beats ${playerSelection}`
   }
 }
 
+function game() {
+  resetMessage()
+  resetScore()
+  const buttons = document.querySelectorAll('button')
+  buttons.forEach((button) => {
+    button.addEventListener ('click', () => {
+      playerSelection = button.id;
+      computerSelection = getComputerChoice(sampleSpace)
+      console.log(computerSelection)
+      results.innerHTML = oneRound(playerSelection, computerSelection)
+      updateScore()
+      if (computerScore == 5) {
+        alert("You Lost!"), 1000
+        resetScore()
+        resetMessage()
+      }
+      else if (playerScore == 5) {
+        alert("You Won!"), 1000
+        resetScore()
+        resetMessage()
+      }
+      })
+    })
+  }
 game()
