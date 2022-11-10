@@ -1,9 +1,55 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  background-color: lightgrey;
+}
+
 .buttons {
   display: flex;
   justify-content: center;
+
 }
 
 button {
   margin: 0 32px;
+  border-radius: 100%;
+  background-color: black;
+  transition: 0.2s;
+  padding: 24px;
+}
+
+.results {
+  text-align: center;
+  font-size: 32px
+}
+
+.title  {
+  display: flex;
+  justify-content: center;
+  margin-top: 64px;
   font-size: 64px;
+}
+.desc  {
+  display: flex;
+  justify-content: center;
+  margin: 64px;
+  font-size: 32px;
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  margin: 64px;
+  font-size: 32px;
+}
+
+.player-score,
+.computer-score {
+  margin: 0 32px;
+}
+
+button:hover {
+  transform: scale(1.2);
+  background-color: green;
 }
