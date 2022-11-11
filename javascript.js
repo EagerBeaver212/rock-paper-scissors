@@ -13,7 +13,7 @@ function roundWinner(playerSelection,computerSelection) {
     (playerSelection === "Paper" && computerSelection === "Rock") ||
     (playerSelection === "Scissors" && computerSelection === "Paper")
   ) { 
-    return "Player"; 
+    return "Player";
   }
   else {
     return "Computer";
@@ -65,7 +65,6 @@ function game() {
     button.addEventListener ('click', () => {
       playerSelection = button.id;
       computerSelection = getComputerChoice(sampleSpace)
-      console.log(computerSelection)
       results.innerHTML = oneRound(playerSelection, computerSelection)
       updateScore()
       if (computerScore == 5) {
